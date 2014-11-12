@@ -1,17 +1,19 @@
 <?php
 namespace frontend\controllers;
 
-use Yii;
 use common\models\LoginForm;
+use common\models\Product;
+use frontend\models\ContactForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
-use frontend\models\ContactForm;
+use Yii;
 use yii\base\InvalidParamException;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
+use yii\web\NotFoundHttpException;
 
 /**
  * Site controller
@@ -167,5 +169,14 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+
+    public function actionProduct($id)
+    {
+        $model = Product::findOne($id);
+        if (!isset($model))
+            throw new NotFoundHttpException('Object not found.');
+
+        return $this->render('product', ['model' => $model]);
     }
 }

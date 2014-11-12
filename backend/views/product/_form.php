@@ -16,6 +16,12 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'price')->textInput() ?>
 
+    <?= $form->field($model, 'short_description')->textarea() ?>
+
+    <?= $form->field($model, 'long_description')->textarea(['rows' => 6]) ?>
+
+    <?= $form->field($model, 'image')->fileInput() ?>
+
     <?= $form->field($model, 'quantity')->textInput() ?>
 
     <div class="form-group">

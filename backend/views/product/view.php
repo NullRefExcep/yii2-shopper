@@ -31,6 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
             'price',
+            'short_description:ntext',
+            'image',
             'quantity',
         ],
     ]) ?>

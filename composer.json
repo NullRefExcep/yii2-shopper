@@ -1,23 +1,27 @@
 {
-    "name": "yiisoft/yii2-app-advanced",
-    "description": "Yii 2 Advanced Application Template",
-    "keywords": ["yii2", "framework", "advanced", "application template"],
-    "homepage": "http://www.yiiframework.com/",
+    "name": "null-ref-excep/yii2-shopper",
+    "description": "E-commerce application template based on Yii 2 Advanced Application Template",
+    "keywords": [
+        "yii2",
+        "framework",
+        "application template",
+        "shop",
+        "e-commerce"
+    ],
     "type": "project",
-    "license": "BSD-3-Clause",
+    "license": "MIT",
     "support": {
-        "issues": "https://github.com/yiisoft/yii2/issues?state=open",
-        "forum": "http://www.yiiframework.com/forum/",
-        "wiki": "http://www.yiiframework.com/wiki/",
-        "irc": "irc://irc.freenode.net/yii",
-        "source": "https://github.com/yiisoft/yii2"
+        "issues": "https://github.com/NullRefExcep/yii2-shopper/issues",
+        "wiki": "https://github.com/NullRefExcep/yii2-shopper/wiki",
+        "source": "https://github.com/NullRefExcep/yii2-shopper"
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "require": {
         "php": ">=5.4.0",
         "yiisoft/yii2": "2.0.0",
         "yiisoft/yii2-bootstrap": "2.0.0",
-        "yiisoft/yii2-swiftmailer": "2.0.0"
+        "yiisoft/yii2-swiftmailer": "2.0.0",
+        "2amigos/yii2-resource-manager-component": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "2.0.0",

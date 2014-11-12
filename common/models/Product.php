@@ -10,6 +10,9 @@ use Yii;
  * @property integer $id
  * @property string $name
  * @property double $price
+ * @property string $short_description
+ * @property string $long_description
+ * @property string $image
  * @property integer $quantity
  */
 class Product extends \yii\db\ActiveRecord
@@ -29,8 +32,9 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             [['price'], 'number'],
+            [['short_description', 'long_description'], 'string'],
             [['quantity'], 'integer'],
-            [['name'], 'string', 'max' => 255]
+            [['name', 'image'], 'string', 'max' => 255]
         ];
     }
 
@@ -43,7 +47,14 @@ class Product extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
             'price' => 'Price',
+            'description' => 'Description',
+            'image' => 'Image',
             'quantity' => 'Quantity',
         ];
+    }
+
+    public function getImage($cover = false)
+    {
+        return '//lorempixel.com/' . ($cover ? '800/300' : '320/150') . '/technics/' . $this->id;
     }
 }
