@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'price') ?>
 
-    <?= $form->field($model, 'description') ?>
+    <?= $form->field($model, 'short_description') ?>
 
     <?= $form->field($model, 'image') ?>
 

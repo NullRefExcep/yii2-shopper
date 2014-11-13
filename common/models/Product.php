@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "product".
@@ -13,10 +14,12 @@ use Yii;
  * @property string $short_description
  * @property string $long_description
  * @property string $image
- * @property integer $quantity
  */
-class Product extends \yii\db\ActiveRecord
+class Product extends ActiveRecord
 {
+    public $file;
+    public $categories;
+
     /**
      * @inheritdoc
      */
@@ -31,10 +34,11 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['name', 'price', 'short_description', 'long_description'], 'required'],
             [['price'], 'number'],
             [['short_description', 'long_description'], 'string'],
-            [['quantity'], 'integer'],
-            [['name', 'image'], 'string', 'max' => 255]
+            [['name', 'image'], 'string', 'max' => 255],
+            [['file'], 'file', 'extensions' => ['jpg', 'png']],
         ];
     }
 
@@ -49,12 +53,18 @@ class Product extends \yii\db\ActiveRecord
             'price' => 'Price',
             'description' => 'Description',
             'image' => 'Image',
-            'quantity' => 'Quantity',
         ];
     }
 
-    public function getImage($cover = false)
+    public function getImage()
     {
-        return '//lorempixel.com/' . ($cover ? '800/300' : '320/150') . '/technics/' . $this->id;
+        return $this->image;
     }
+
+    public function getCategories()
+    {
+        return $this->hasMany(Category::className(), ['id' => 'category_id'])
+            ->viaTable('category_product', ['product_id', 'id']);
+    }
+
 }

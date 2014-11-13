@@ -25,7 +25,7 @@ $this->title = $model->name;
             <div class="col-md-9">
 
                 <div class="thumbnail">
-                    <?= Html::img($model->getImage(true), ['class' => 'img-responsive', 'alt' => $model->name]) ?>
+                    <?= Html::img($model->getImage(), ['class' => 'img-responsive', 'alt' => $model->name]) ?>
                     <div class="caption-full">
                         <h4 class="pull-right">$<?= $model->price ?></h4>
                         <h4><a><?= $model->name ?></a>

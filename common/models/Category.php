@@ -3,14 +3,16 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "category".
  *
  * @property integer $id
  * @property string $name
+ * @property integer $parent_id
  */
-class Category extends \yii\db\ActiveRecord
+class Category extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -40,4 +42,11 @@ class Category extends \yii\db\ActiveRecord
             'name' => 'Name',
         ];
     }
+
+    public function getProducts()
+    {
+        return $this->hasMany(Product::className(), ['id' => 'product_id'])
+            ->viaTable('category_product', ['category_id' => 'id']);
+    }
+
 }

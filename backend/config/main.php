@@ -33,6 +33,9 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
         ],
+        'resourceManager' => [
+            'class' => 'dosamigos\resourcemanager\FileSystemResourceManager',
+        ],
     ],
     'params' => $params,
 ];

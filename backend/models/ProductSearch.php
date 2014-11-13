@@ -2,10 +2,10 @@
 
 namespace backend\models;
 
+use common\models\Product;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Product;
 
 /**
  * ProductSearch represents the model behind the search form about `common\models\Product`.
@@ -18,7 +18,7 @@ class ProductSearch extends Product
     public function rules()
     {
         return [
-            [['id', 'quantity'], 'integer'],
+            [['id'], 'integer'],
             [['name', 'short_description', 'image'], 'safe'],
             [['price'], 'number'],
         ];
@@ -55,7 +55,6 @@ class ProductSearch extends Product
         $query->andFilterWhere([
             'id' => $this->id,
             'price' => $this->price,
-            'quantity' => $this->quantity,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])

@@ -14,7 +14,6 @@ class m141109_104615_create_products extends Migration
             'short_description' => Schema::TYPE_TEXT,
             'long_description' => Schema::TYPE_TEXT,
             'image' => Schema::TYPE_STRING,
-            'quantity' => Schema::TYPE_INTEGER,
         ]);
     }
 

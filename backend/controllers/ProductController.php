@@ -2,12 +2,14 @@
 
 namespace backend\controllers;
 
-use Yii;
-use common\models\Product;
 use backend\models\ProductSearch;
+use common\models\Product;
+use Yii;
+use yii\filters\VerbFilter;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -62,13 +64,21 @@ class ProductController extends Controller
     {
         $model = new Product();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->file = UploadedFile::getInstance($model, 'file');
+            if ($model->validate()) {
+                $filename = 'uploads/' . md5($model->file->baseName) . '.' . $model->file->extension;
+                if ($model->file->saveAs($filename)) {
+                    $model->image = Url::to($filename, true);
+                    $model->save(false);
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }
         }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -81,13 +91,21 @@ class ProductController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->file = UploadedFile::getInstance($model, 'file');
+            if ($model->validate()) {
+                $filename = 'uploads/' . md5($model->file->baseName) . '.' . $model->file->extension;
+                if ($model->file->saveAs($filename)) {
+                    $model->image = Url::to($filename, true);
+                    $model->save(false);
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }
         }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     /**
