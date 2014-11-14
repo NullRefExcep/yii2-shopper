@@ -1,6 +1,6 @@
 <?php
+use frontend\widgets\CategoriesList;
 use yii\helpers\Html;
-use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Product */
@@ -12,15 +12,7 @@ $this->title = $model->name;
 
         <div class="row">
 
-            <div class="col-md-3">
-                <p class="lead">Shop Name</p>
-
-                <div class="list-group">
-                    <?php foreach (\common\models\Category::find()->all() as $category): ?>
-                        <?= Html::a($category->name, Url::toRoute(['site/category', 'id' => $category->id]), ['class' => 'list-group-item']) ?>
-                    <?php endforeach; ?>
-                </div>
-            </div>
+            <?= CategoriesList::widget([]) ?>
 
             <div class="col-md-9">
 

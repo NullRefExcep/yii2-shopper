@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Category;
 use kartik\widgets\Select2;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -7,6 +8,13 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\Product */
 /* @var $form yii\widgets\ActiveForm */
+$categories = \yii\helpers\ArrayHelper::map(Category::find()->all(), 'id', 'name', function (Category $object, $defaultValue) {
+    if ($object instanceof Category) {
+        $parent = $object->getParentCategory()->one();
+        return empty($parent) ? $defaultValue : $parent->name;
+    }
+    return $defaultValue;
+});
 ?>
 
 <div class="product-form">
@@ -16,7 +24,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
 
     <?= $form->field($model, 'categories')->widget(Select2::className(), [
-        'data' => \yii\helpers\ArrayHelper::map(\common\models\Category::find()->all(), 'id', 'name'),
+        'data' => $categories,
         'options' => [
             'placeholder' => 'Select a category ...',
             'multiple' => true,

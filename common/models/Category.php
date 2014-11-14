@@ -15,6 +15,10 @@ use yii\db\ActiveRecord;
 class Category extends ActiveRecord
 {
     /**
+     * @var Category[]
+     */
+    public $children;
+    /**
      * @inheritdoc
      */
     public static function tableName()
@@ -28,7 +32,8 @@ class Category extends ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'string', 'max' => 255]
+            [['name'], 'string', 'max' => 255],
+            [['parent_id'], 'exist', 'targetClass' => self::className(), 'targetAttribute' => 'id'],
         ];
     }
 
@@ -47,6 +52,16 @@ class Category extends ActiveRecord
     {
         return $this->hasMany(Product::className(), ['id' => 'product_id'])
             ->viaTable('category_product', ['category_id' => 'id']);
+    }
+
+    public function getParentCategory()
+    {
+        return self::find()->where(['id' => $this->parent_id]);
+    }
+
+    public function getChildCategories()
+    {
+        return self::find()->where(['parent_id' => $this->id]);
     }
 
 }

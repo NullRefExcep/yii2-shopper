@@ -2,10 +2,7 @@
 use frontend\widgets\CategoriesList;
 use yii\helpers\Html;
 
-/**
- * @var $this yii\web\View
- * @var $dataProvider \yii\data\ActiveDataProvider
- */
+/* @var $this yii\web\View */
 $this->title = 'Shop Homepage';
 ?>
 <div class="site-index">
@@ -39,7 +36,7 @@ $this->title = 'Shop Homepage';
 
                 <div class="row">
 
-                    <?php foreach ($dataProvider->getModels() as $product) : ?>
+                    <?php foreach (\common\models\Product::find()->all() as $product) : ?>
                         <div class="col-sm-4 col-lg-4 col-md-4">
                             <div class="thumbnail">
                                 <?= Html::img($product->getImage(), ['alt' => $product->name]) ?>

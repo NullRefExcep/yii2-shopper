@@ -10,7 +10,9 @@ class m141109_111923_create_categories extends Migration
         $this->createTable('{{%category}}', [
             'id' => Schema::TYPE_PK,
             'name' => Schema::TYPE_STRING,
+            'parent_id' => Schema::TYPE_INTEGER,
         ]);
+        $this->createIndex('parent', '{{%category}}', ['parent_id']);
     }
 
     public function down()

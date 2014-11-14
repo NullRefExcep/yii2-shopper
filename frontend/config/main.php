@@ -32,6 +32,9 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
         ],
+        'catalog' => [
+            'class' => 'common\components\Catalog',
+        ]
     ],
     'params' => $params,
 ];

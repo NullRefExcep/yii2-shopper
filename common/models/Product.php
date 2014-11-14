@@ -39,6 +39,7 @@ class Product extends ActiveRecord
             [['short_description', 'long_description'], 'string'],
             [['name', 'image'], 'string', 'max' => 255],
             [['file'], 'file', 'extensions' => ['jpg', 'png']],
+            [['categories'], 'safe'],
         ];
     }
 
@@ -64,7 +65,7 @@ class Product extends ActiveRecord
     public function getCategories()
     {
         return $this->hasMany(Category::className(), ['id' => 'category_id'])
-            ->viaTable('category_product', ['product_id', 'id']);
+            ->viaTable('category_product', ['product_id' => 'id']);
     }
 
 }

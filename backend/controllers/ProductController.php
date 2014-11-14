@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\ProductSearch;
+use common\models\Category;
 use common\models\Product;
 use Yii;
 use yii\filters\VerbFilter;
@@ -71,6 +72,10 @@ class ProductController extends Controller
                 if ($model->file->saveAs($filename)) {
                     $model->image = Url::to($filename, true);
                     $model->save(false);
+                    foreach ($model->categories as $categoryId) {
+                        $category = Category::findOne($categoryId);
+                        $model->link('categories', $category);
+                    }
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             }
@@ -98,6 +103,10 @@ class ProductController extends Controller
                 if ($model->file->saveAs($filename)) {
                     $model->image = Url::to($filename, true);
                     $model->save(false);
+                    foreach ($model->categories as $categoryId) {
+                        $category = Category::findOne($categoryId);
+                        $model->link('categories', $category);
+                    }
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             }
