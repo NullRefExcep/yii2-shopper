@@ -1,18 +1,14 @@
 <?php
 
-use common\models\Category;
-use kartik\widgets\Select2;
+use wbraganca\fancytree\FancytreeWidget;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Category */
 /* @var $form yii\widgets\ActiveForm */
-
-$query = Category::find();
-if (!$model->isNewRecord)
-    $query->where(['!=', 'id', $model->id]);
-$categories = \yii\helpers\ArrayHelper::map($query->all(), 'id', 'name')
+/* @var $model \common\models\Category */
+$query = \common\models\Category::find();
+$data = $query->dataFancytree();
 ?>
 
 <div class="category-form">
@@ -21,16 +17,15 @@ $categories = \yii\helpers\ArrayHelper::map($query->all(), 'id', 'name')
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'parent_id')->widget(Select2::className(), [
-        'data' => $categories,
-        'options' => ['placeholder' => 'Select a parent category ...'],
-        'pluginOptions' => [
-            'allowClear' => true,
-        ],
+    <?= $form->field($model, 'parentId')->widget(FancytreeWidget::className(), [
+        'options' => [
+            'source' => $data,
+        ]
     ]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update',
+            ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

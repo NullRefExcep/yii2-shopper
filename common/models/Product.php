@@ -4,6 +4,8 @@ namespace common\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yz\shoppingcart\CartPositionInterface;
+use yz\shoppingcart\CartPositionTrait;
 
 /**
  * This is the model class for table "product".
@@ -15,8 +17,10 @@ use yii\db\ActiveRecord;
  * @property string $long_description
  * @property string $image
  */
-class Product extends ActiveRecord
+class Product extends ActiveRecord implements CartPositionInterface
 {
+    use CartPositionTrait;
+
     public $file;
     public $categories;
 
@@ -67,5 +71,22 @@ class Product extends ActiveRecord
         return $this->hasMany(Category::className(), ['id' => 'category_id'])
             ->viaTable('category_product', ['product_id' => 'id']);
     }
+
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
 
 }

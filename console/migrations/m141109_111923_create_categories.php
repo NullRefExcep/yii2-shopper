@@ -10,9 +10,15 @@ class m141109_111923_create_categories extends Migration
         $this->createTable('{{%category}}', [
             'id' => Schema::TYPE_PK,
             'name' => Schema::TYPE_STRING,
-            'parent_id' => Schema::TYPE_INTEGER,
+            'root' => Schema::TYPE_INTEGER . ' UNSIGNED DEFAULT NULL',
+            'left' => Schema::TYPE_INTEGER . ' UNSIGNED NOT NULL',
+            'right' => Schema::TYPE_INTEGER . ' UNSIGNED NOT NULL',
+            'level' => Schema::TYPE_SMALLINT . ' UNSIGNED NOT NULL',
         ]);
-        $this->createIndex('parent', '{{%category}}', ['parent_id']);
+        $this->createIndex('root', '{{%category}}', ['root']);
+        $this->createIndex('left', '{{%category}}', ['left']);
+        $this->createIndex('right', '{{%category}}', ['right']);
+        $this->createIndex('level', '{{%category}}', ['level']);
     }
 
     public function down()

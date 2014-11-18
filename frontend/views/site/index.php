@@ -14,16 +14,21 @@ $this->title = 'Shop Homepage';
 
         <div class="row">
 
-            <?= CategoriesList::widget() ?>
+            <div class="col-md-3">
+                <?= CategoriesList::widget() ?>
+            </div>
 
             <div class="col-md-9">
 
                 <?php $items = [];
-                foreach (\common\models\Product::find()->limit(3)->all() as $product)
+                foreach (\common\models\Product::find()->limit(3)->all() as $product) {
+                    /** @var \common\models\Product $product */
                     $items[] = [
-                        'content' => Html::a(Html::img($product->getImage(), ['alt' => $product->name]), ['site/product', 'id' => $product->id]),
+                        'content' => Html::a(Html::img($product->getImage(), ['alt' => $product->name]),
+                            ['site/product', 'id' => $product->id]),
                         'caption' => $product->name . ' $' . $product->price,
-                    ]; ?>
+                    ];
+                } ?>
                 <div class="row carousel-holder">
                     <div class="col-md-12">
                         <?= \yii\bootstrap\Carousel::widget([

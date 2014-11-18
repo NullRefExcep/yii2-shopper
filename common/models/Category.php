@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use wbraganca\behaviors\NestedSetBehavior;
+use wbraganca\behaviors\NestedSetQuery;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -10,14 +12,18 @@ use yii\db\ActiveRecord;
  *
  * @property integer $id
  * @property string $name
- * @property integer $parent_id
+ * @property integer $root
+ * @property integer $left
+ * @property integer $right
+ * @property integer $level
+ *
+ * @method boolean saveNode(boolean $runValidation = true, array $attributes = null) see NestedSetBehavior::saveNode() for more info
+ * @method boolean appendTo(ActiveRecord $target, boolean $runValidation = true, array $attributes = null) see NestedSetBehavior::appendTo() for more info
  */
 class Category extends ActiveRecord
 {
-    /**
-     * @var Category[]
-     */
-    public $children;
+    public $parentId;
+
     /**
      * @inheritdoc
      */
@@ -32,8 +38,18 @@ class Category extends ActiveRecord
     public function rules()
     {
         return [
+            [['name'], 'required'],
             [['name'], 'string', 'max' => 255],
-            [['parent_id'], 'exist', 'targetClass' => self::className(), 'targetAttribute' => 'id'],
+            [
+                ['parentId'],
+                'compare',
+                'compareAttribute' => 'id',
+                'operator' => '!=',
+                'when' => function () {
+                    return !$this->isNewRecord;
+                }
+            ],
+            [['parentId'], 'safe']
         ];
     }
 
@@ -48,20 +64,32 @@ class Category extends ActiveRecord
         ];
     }
 
+    public function behaviors()
+    {
+        return [
+            'nested' => [
+                'class' => NestedSetBehavior::className(),
+                'hasManyRoots' => true,
+                'titleAttribute' => 'name',
+                'idAttribute' => 'id',
+                'rootAttribute' => 'root',
+                'leftAttribute' => 'left',
+                'rightAttribute' => 'right',
+                'levelAttribute' => 'level',
+            ],
+        ];
+    }
+
+    public static function find()
+    {
+        return new NestedSetQuery(get_called_class());
+    }
+
+
     public function getProducts()
     {
         return $this->hasMany(Product::className(), ['id' => 'product_id'])
             ->viaTable('category_product', ['category_id' => 'id']);
-    }
-
-    public function getParentCategory()
-    {
-        return self::find()->where(['id' => $this->parent_id]);
-    }
-
-    public function getChildCategories()
-    {
-        return self::find()->where(['parent_id' => $this->id]);
     }
 
 }

@@ -12,7 +12,9 @@ $this->title = $model->name;
 
         <div class="row">
 
-            <?= CategoriesList::widget([]) ?>
+            <div class="col-md-3">
+                <?= CategoriesList::widget([]) ?>
+            </div>
 
             <div class="col-md-9">
 
