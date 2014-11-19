@@ -1,13 +1,16 @@
 <?php
+use wbraganca\fancytree\FancytreeWidget;
 
 /** @var $categories array */
 ?>
 <div>
+
     <p class="lead">Categories</p>
 
-    <?= \wbraganca\fancytree\FancytreeWidget::widget([
-        'options' => [
-            'source' => $categories,
-        ]
+    <?= FancytreeWidget::widget([
+        'name' => 'category',
+        'source' => $categories,
+        'clickFolderMode' => FancytreeWidget::CLICK_ACTIVATE_EXPAND,
     ]) ?>
+
 </div>

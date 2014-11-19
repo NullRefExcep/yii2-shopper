@@ -18,9 +18,8 @@ $data = $query->dataFancytree();
     <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
 
     <?= $form->field($model, 'parentId')->widget(FancytreeWidget::className(), [
-        'options' => [
-            'source' => $data,
-        ]
+        'source' => $data,
+        'clickFolderMode' => FancytreeWidget::CLICK_ACTIVATE_EXPAND,
     ]) ?>
 
     <div class="form-group">
