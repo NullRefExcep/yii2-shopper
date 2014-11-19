@@ -4,8 +4,6 @@ namespace common\models;
 
 use Yii;
 use yii\db\ActiveRecord;
-use yz\shoppingcart\CartPositionInterface;
-use yz\shoppingcart\CartPositionTrait;
 
 /**
  * This is the model class for table "product".
@@ -17,10 +15,8 @@ use yz\shoppingcart\CartPositionTrait;
  * @property string $long_description
  * @property string $image
  */
-class Product extends ActiveRecord implements CartPositionInterface
+class Product extends ActiveRecord
 {
-    use CartPositionTrait;
-
     public $file;
     public $categories;
 

@@ -17,13 +17,10 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
 
     <?= $form->field($model, 'categories')->widget(FancytreeWidget::className(), [
-        'options' => [
-            'source' => Category::find()->dataFancytree(),
-            'selectMode' => 2,
-            'checkbox' => true,
-            'titlesTabbable' => true,
-            'clickFolderMode' => 3,
-        ]
+        'source' => Category::find()->dataFancytree(),
+        'checkbox' => true,
+        'titlesTabbable' => true,
+        'clickFolderMode' => FancytreeWidget::CLICK_ACTIVATE_EXPAND,
     ]) ?>
 
     <?= $form->field($model, 'price')->textInput() ?>

@@ -40,5 +40,11 @@
             "npm-asset-library": "vendor/npm",
             "bower-asset-library": "vendor/bower"
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/serhiyvinichuk/yii2-fancytree-widget"
+        }
+    ]
 }
